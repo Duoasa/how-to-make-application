@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-一套面向个人独立开发者、供 Codex 使用的轻量级规格驱动开发（SDD）Skill。
+一套面向个人独立开发者、可供 Codex、Claude Code 和 DeepSeek Harness 使用的轻量级规格驱动开发（SDD）Skill。
 
 它帮助开发者把一个想法或现有代码库，逐步变成由一个人也能理解、实现、验证、发布并持续接手的产品。文档在这里是约束决策和保存证据的控制系统，而不是为了流程而写的材料。
 
@@ -17,6 +17,18 @@
 - 精确记录当前工作、人工验收和公开版本历史，让未来会话可以直接继续。
 
 这套 Skill 面向有一定复杂度的软件工作，不会把整套流程强加到单一知识问答或微小修改上。
+
+## Agent 兼容性
+
+仓库只维护一份权威 `SKILL.md`。所有已支持 Agent 都读取同一份正文和按需参考文件；差异只存在于发现路径和显式调用语法。
+
+| Agent | 兼容状态 | 个人 Skill 路径 | 显式调用 |
+|---|---|---|---|
+| Codex | 原生 | `~/.codex/skills/how-to-make-application/` | `$how-to-make-application` |
+| Claude Code | 原生 Agent Skill | `~/.claude/skills/how-to-make-application/` | `/how-to-make-application` |
+| DeepSeek Harness | 原生 Skill，开发者预览 | `~/.dsh/skills/how-to-make-application/` | `/how-to-make-application` |
+
+个人安装、项目安装、更新、调用和验证细节见 [Claude Code 适配说明](adapters/claude-code.md) 与 [DeepSeek Harness 适配说明](adapters/deepseek-harness.md)。`agents/openai.yaml` 仅提供 Codex UI 元数据；Claude Code 与 DeepSeek Harness 会忽略它，直接加载可移植的 `SKILL.md`。
 
 ## 工作模式
 
@@ -47,6 +59,10 @@
 
 ## 安装
 
+根据使用的 Agent 选择发现目录。三种安装方式都以仓库根目录作为 Skill 根目录。
+
+### Codex
+
 可以直接让 Codex 从下面的仓库安装：
 
 ```text
@@ -56,25 +72,58 @@ https://github.com/Duoasa/how-to-make-application
 也可以手动安装：
 
 ```bash
+mkdir -p ~/.codex/skills
 git clone https://github.com/Duoasa/how-to-make-application.git ~/.codex/skills/how-to-make-application
 ```
 
-仓库根目录就是 Skill 根目录，`SKILL.md`、`agents/` 和 `references/` 保持 Codex 所需的结构。
+### Claude Code
+
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/Duoasa/how-to-make-application.git ~/.claude/skills/how-to-make-application
+```
+
+如果希望作为项目 Skill 随仓库共同维护：
+
+```bash
+mkdir -p .claude/skills
+git submodule add https://github.com/Duoasa/how-to-make-application.git .claude/skills/how-to-make-application
+```
+
+### DeepSeek Harness
+
+```bash
+mkdir -p ~/.dsh/skills
+git clone https://github.com/Duoasa/how-to-make-application.git ~/.dsh/skills/how-to-make-application
+```
+
+如果希望作为项目 Skill 随仓库共同维护：
+
+```bash
+mkdir -p .dsh/skills
+git submodule add https://github.com/Duoasa/how-to-make-application.git .dsh/skills/how-to-make-application
+```
+
+DeepSeek Harness 也会扫描 `~/.agents/skills/` 和项目 `.agents/skills/` 下的兼容 Skill。
 
 ## 使用
 
-使用 `$how-to-make-application` 显式调用，例如：
+三种 Agent 都可以根据 `description` 自动选择 Skill。显式调用使用各自的语法：
 
 ```text
-使用 $how-to-make-application，把这个 App 想法整理为聚焦的首发版本计划。
+Codex:            使用 $how-to-make-application，把这个 App 想法整理为聚焦的首发版本计划。
+Claude Code:      /how-to-make-application 把这个 App 想法整理为聚焦的首发版本计划。
+DeepSeek Harness: /how-to-make-application 把这个 App 想法整理为聚焦的首发版本计划。
+```
+
+更多示例：
+
+```text
+使用 how-to-make-application Skill，检查这个现有仓库，确认真实基线，并为下一个功能编写执行规格。
 ```
 
 ```text
-使用 $how-to-make-application，检查这个现有仓库，确认真实基线，并为下一个功能编写执行规格。
-```
-
-```text
-使用 $how-to-make-application，验证这个发布候选包、记录证据并准备准确的 Handoff，暂时不要发布。
+使用 how-to-make-application Skill，验证这个发布候选包、记录证据并准备准确的 Handoff，暂时不要发布。
 ```
 
 这套 Skill 不会扩大正常授权边界。规格或发布计划不等于获得了发布、破坏性迁移、付费服务、秘密信息访问或无关外部修改的权限。
@@ -101,6 +150,9 @@ Skill 复用的是工作方法，而不是 QuotaView 的 macOS 技术栈、视�
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml
+├── adapters/
+│   ├── claude-code.md
+│   └── deepseek-harness.md
 ├── references/
 │   ├── document-system.md
 │   ├── execution-playbook.md
@@ -110,7 +162,7 @@ Skill 复用的是工作方法，而不是 QuotaView 的 macOS 技术栈、视�
 └── README.zh-CN.md
 ```
 
-入口文件保持紧凑；Codex 只会在当前任务需要时继续读取对应参考文档。
+入口文件保持紧凑；每个已支持 Agent 都只会在当前任务需要时继续读取对应参考文档。
 
 ## 核心原则
 

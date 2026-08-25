@@ -1,6 +1,6 @@
 ---
 name: how-to-make-application
-description: Plan, build, evolve, verify, and release an application as a solo developer using a lightweight specification-driven system. Use for turning an app idea into an executable plan, establishing project truth and constraints, implementing a substantial feature or refactor, preparing a release, or creating a reliable handoff for future work. Do not invoke for isolated factual questions or trivial edits unless the user asks to apply the full workflow.
+description: Guides a solo developer to plan, build, evolve, diagnose, verify, release, and resume an application using a lightweight specification-driven system. Use when turning an app idea into an executable plan, establishing project truth and constraints, implementing a substantial feature or refactor, preparing a release, or creating a reliable handoff. Do not use for isolated factual questions or trivial edits unless the user asks for the full workflow.
 ---
 
 # How to Make Application
@@ -17,6 +17,7 @@ Build the smallest coherent product that can be understood, verified, released, 
 6. Verification must produce evidence proportional to risk. Review code and state transitions, run relevant tests, build the real deliverable, inspect its contents, and exercise the artifact. Reserve visual, experiential, or product acceptance for the user unless they explicitly delegate it and a reliable observation path exists.
 7. Keep temporary debug behavior explicit, isolated, visibly labeled, searchable, and impossible to ship. Remove it and verify its absence before commit, push, or release.
 8. Update handoff and version facts in the same task that changes them. A future session should be able to determine the production baseline, current workspace, completed evidence, open risks, and exact next step without reconstructing history.
+9. Keep host-agent mechanics separate from the workflow. Use only tools, permissions, and invocation mechanisms actually exposed by the current agent; an adapter never grants broader authority.
 
 ## Choose the working mode
 

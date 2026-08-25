@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md)
 
-A lightweight specification-driven development skill for solo application developers using Codex.
+A portable specification-driven development skill for solo application developers using Codex, Claude Code, or DeepSeek Harness.
 
 It helps turn an idea or an existing codebase into a product that can be understood, implemented, verified, released, and resumed by one person. Documentation is treated as a control system for decisions and evidence—not as paperwork.
 
@@ -17,6 +17,18 @@ It helps turn an idea or an existing codebase into a product that can be underst
 - Keep current work, human acceptance, and published version history precise and resumable.
 
 The skill is intended for substantial application work. It deliberately avoids imposing the full workflow on isolated questions or trivial edits.
+
+## Agent compatibility
+
+The repository keeps one canonical `SKILL.md`. Each supported agent reads that same file and the same on-demand references; only discovery paths and explicit invocation syntax differ.
+
+| Agent | Compatibility | Personal discovery path | Explicit invocation |
+|---|---|---|---|
+| Codex | Native | `~/.codex/skills/how-to-make-application/` | `$how-to-make-application` |
+| Claude Code | Native Agent Skill | `~/.claude/skills/how-to-make-application/` | `/how-to-make-application` |
+| DeepSeek Harness | Native Skill, developer preview | `~/.dsh/skills/how-to-make-application/` | `/how-to-make-application` |
+
+See the focused [Claude Code adapter](adapters/claude-code.md) and [DeepSeek Harness adapter](adapters/deepseek-harness.md) for personal, project, update, invocation, and verification details. `agents/openai.yaml` supplies Codex UI metadata; Claude Code and DeepSeek Harness ignore it and load the portable `SKILL.md` directly.
 
 ## Working modes
 
@@ -47,6 +59,10 @@ When sources conflict, the default priority is: current user instruction, curren
 
 ## Install
 
+Choose the discovery root for the agent you use. The repository root is the skill root in every case.
+
+### Codex
+
 Ask Codex to install the skill from:
 
 ```text
@@ -56,25 +72,58 @@ https://github.com/Duoasa/how-to-make-application
 Or install it manually:
 
 ```bash
+mkdir -p ~/.codex/skills
 git clone https://github.com/Duoasa/how-to-make-application.git ~/.codex/skills/how-to-make-application
 ```
 
-The repository root is the skill root, so `SKILL.md`, `agents/`, and `references/` remain in the layout Codex expects.
+### Claude Code
+
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/Duoasa/how-to-make-application.git ~/.claude/skills/how-to-make-application
+```
+
+For a repository-scoped installation tracked by the project:
+
+```bash
+mkdir -p .claude/skills
+git submodule add https://github.com/Duoasa/how-to-make-application.git .claude/skills/how-to-make-application
+```
+
+### DeepSeek Harness
+
+```bash
+mkdir -p ~/.dsh/skills
+git clone https://github.com/Duoasa/how-to-make-application.git ~/.dsh/skills/how-to-make-application
+```
+
+For a repository-scoped installation tracked by the project:
+
+```bash
+mkdir -p .dsh/skills
+git submodule add https://github.com/Duoasa/how-to-make-application.git .dsh/skills/how-to-make-application
+```
+
+DeepSeek Harness also scans compatible bundles under `~/.agents/skills/` and project `.agents/skills/`.
 
 ## Use
 
-Invoke it explicitly with `$how-to-make-application`, for example:
+All three agents can select the skill automatically from its description. Explicit invocation uses the host agent's syntax:
 
 ```text
-Use $how-to-make-application to turn this app idea into a focused first-release plan.
+Codex:           Use $how-to-make-application to turn this app idea into a focused first-release plan.
+Claude Code:     /how-to-make-application Turn this app idea into a focused first-release plan.
+DeepSeek Harness: /how-to-make-application Turn this app idea into a focused first-release plan.
+```
+
+Further examples:
+
+```text
+Use the how-to-make-application skill to inspect this existing repository, establish the real baseline, and write an execution specification for the next feature.
 ```
 
 ```text
-Use $how-to-make-application to inspect this existing repository, establish the real baseline, and write an execution specification for the next feature.
-```
-
-```text
-Use $how-to-make-application to verify this release candidate, record the evidence, and prepare a precise handoff. Do not publish yet.
+Use the how-to-make-application skill to verify this release candidate, record the evidence, and prepare a precise handoff. Do not publish yet.
 ```
 
 The skill preserves normal authorization boundaries. A specification or release plan does not authorize publishing, destructive migration, paid services, secret access, or unrelated external changes.
@@ -101,6 +150,9 @@ The skill generalizes the working method, not QuotaView's macOS stack, visual sy
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml
+├── adapters/
+│   ├── claude-code.md
+│   └── deepseek-harness.md
 ├── references/
 │   ├── document-system.md
 │   ├── execution-playbook.md
@@ -110,7 +162,7 @@ The skill generalizes the working method, not QuotaView's macOS stack, visual sy
 └── README.zh-CN.md
 ```
 
-The entrypoint stays compact. Codex reads the focused references only when the current task needs them.
+The entrypoint stays compact. Each supported agent reads the focused references only when the current task needs them.
 
 ## Core principles
 
