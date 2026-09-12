@@ -1,6 +1,6 @@
 # Reusable SDD Templates
 
-Copy only the template needed for the current work. Delete irrelevant sections rather than filling them with boilerplate.
+Use an existing suitable document first. Copy only the needed template, keeping outcome, scope, invariants, and completion evidence. Remove irrelevant sections rather than filling them with boilerplate; phase headings and templates do not introduce approval stops.
 
 ## Product brief
 
@@ -43,7 +43,9 @@ Updated: <date>
 # <Feature or Change> Execution Specification
 
 ID: <stable-id>
-Status: Proposed | Approved | In progress | Implemented
+Spec status: Proposed | Accepted | Superseded
+Implementation authorization: <existing user request, or decision still needed>
+Delivery: Planned | Implementing | Verifying | Complete | Released
 Baseline: <version/build/commit>
 Updated: <date>
 Governing rules: <links>
@@ -51,8 +53,10 @@ Governing rules: <links>
 ## Decision
 <Outcome-first summary.>
 
-## Goals
-- ...
+## Requested outcome and completion evidence
+- Result to deliver:
+- Checks that prove it:
+- Review or stopping boundary, only if needed:
 
 ## Non-goals
 - ...
@@ -164,9 +168,9 @@ Date: <date>
 # <Application> Handoff
 
 Updated: <date/time zone>
-Workspace/branch: <path and branch>
+Workspace: <path; verify branch and HEAD live on resume>
 Production baseline: <version/build/tag/commit>
-Current development identity: <version/build>
+Current development identity: <source/workspace and unpublished work; may share stable version configuration>
 Current objective: <one sentence>
 
 ## Release entry

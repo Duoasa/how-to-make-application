@@ -37,7 +37,7 @@ Use a short product brief when the product direction is not yet stable. Capture 
 
 ### Focused specification
 
-Create one for a substantial feature, refactor, migration, integration, or difficult bug. It owns planned behavior and execution decisions, not completion claims. Include status, baseline, goals, non-goals, invariants, current evidence, target architecture, states, failure handling, phased work, tests, acceptance, stop conditions, and unresolved decisions.
+Create or reuse a focused specification when a substantial feature, refactor, migration, integration, or difficult bug needs durable decisions. Start with the outcome, scope, invariants, and acceptance evidence. Add architecture, states, failure handling, budgets, phases, or open decisions only when they change the work. Keep intended behavior and implementation evidence clearly labeled; a small fix can update the owning requirement without a new document.
 
 Use a separate specialized specification when a subsystem has enough distinct protocol, security, lifecycle, or platform detail that keeping it in the core document would make most tasks load irrelevant context. State which document wins if they conflict.
 
@@ -53,8 +53,8 @@ Use after a large phase or migration when “what actually landed” differs mea
 
 Maintain one compact current-state entry point:
 
-- update date and workspace/branch;
-- production baseline and current development identity;
+- update date and workspace; verify branch, HEAD, and dirty state live when resuming;
+- public stable baseline and separate current development identity, including unpublished changes even when configuration versions coincide;
 - current objective and status;
 - implemented but unreleased work;
 - verification completed with exact results;
@@ -80,11 +80,12 @@ Use a QA matrix or issue record when visual, interaction, hardware, accessibilit
 Use explicit states:
 
 - `proposed`: not approved or started;
-- `approved`: direction accepted, implementation not implied;
+- `approved`: direction accepted; record implementation authorization separately, reusing an explicit implementation request already given;
 - `in progress`: active work, not releasable by default;
 - `implemented`: code exists, verification may be incomplete;
 - `verified`: stated automated or observable checks passed;
 - `waiting for owner acceptance`: machine checks passed but human product judgment remains;
+- `complete`: the requested non-release work and necessary verification are finished; no publication is implied;
 - `released`: exact published artifact and metadata were verified;
 - `withdrawn`: release removed or superseded for a recorded defect;
 - `blocked`: a named missing decision, capability, credential, or external condition prevents progress.
@@ -99,6 +100,18 @@ Avoid ambiguous phrases such as “basically done,” “should work,” or “r
 - Implementation reports link to their specification and code/release identity.
 - Public downloads, store metadata, release notes, version records, and handoff identify the same current release.
 - A release, withdrawal, tag change, or change to the public “latest” pointer updates all affected records in the same task.
+
+## Task-sized maintenance
+
+- Keep AGENTS.md as a short set of durable constraints and conditional links.
+  Move detailed design contracts, historical evidence, and release procedures to
+  their owning references; preserve their actual requirements when relocating.
+- Go directly to known material. Read release records for release identity,
+  handoff for resuming work, and only the spec sections affected by a change.
+- Update records whose facts changed; do not synchronize every document on every
+  edit. A wording fix needs no spec registry entry or release check.
+- Preserve existing identifiers, historical evidence, and links when simplifying.
+  Archive dated history with a current-state backlink, not an active roadmap.
 
 ## Documentation hygiene
 

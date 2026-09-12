@@ -1,6 +1,6 @@
 # Solo Application Execution Playbook
 
-Use this playbook for substantial implementation, architectural evolution, integrations, migrations, and difficult defects.
+Use the relevant sections for substantial implementation, architectural evolution, integrations, migrations, or difficult defects. The headings are a reference menu, not a mandatory sequence or set of review stops.
 
 ## 1. Frame the outcome
 
@@ -63,7 +63,7 @@ A robust sequence often looks like:
 5. **Expansion**: add more providers, views, platforms, or automation only after the core slice is stable.
 6. **Distribution**: packaging, signing, entitlements, migrations, release metadata, and clean-install verification.
 
-Adapt the labels to the product. Keep these principles:
+Use phases only when they improve reversibility or verification. Continue between authorized phases without pausing for routine approval. Keep these principles:
 
 - a phase has an observable result and exit criteria;
 - a phase does not claim future capabilities;
@@ -76,7 +76,7 @@ Adapt the labels to the product. Keep these principles:
 - Define domain identifiers, units, aggregation rules, validity, and time semantics before formatting them for a screen.
 - Separate availability, business risk, service health, permissions, and loading; do not overload one status.
 - Keep collection/read paths physically separate from account mutation or other side effects.
-- Require explicit capability discovery and user authorization before side effects.
+- Verify the capability and authorization for the actual side effect. Reuse existing scoped authorization for ordinary implementation and local checks; reserve new approval for operations outside it.
 - Use stable IDs rather than display text, array position, random IDs, or changing values.
 - Make repeated requests idempotent or give them an explicit outcome-unknown state; never blindly retry a potentially destructive action.
 - Treat disabled as a lifecycle state: no task, process, write, polling, or notification work should remain.
@@ -103,7 +103,7 @@ Do not use animation, delays, retries, cached values, or fixed dimensions to hid
 
 ## 7. Stop conditions
 
-Pause the affected phase when any of these applies:
+First try relevant evidence, read-only investigation, and reversible repairs within scope. If an unresolved condition below prevents a correct next step, pause only the dependent operation, while completing independent work:
 
 - the only implementation path violates a declared privacy, security, platform, or product boundary;
 - identity or ownership cannot be established for persisted data or mutations;
