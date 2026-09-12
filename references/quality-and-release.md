@@ -4,7 +4,14 @@ Use this reference to create evidence that an application change works and that 
 
 ## Verification layers
 
-Run only relevant layers, but state every omitted layer and why.
+Select layers by the affected behavior and risk, honoring explicit project and CI gates.
+Documentation-only work checks links, consistency, and diff hygiene; a local code
+fix usually starts with focused tests. Shared contracts or uncertain impact justify
+the standard suite; platform, packaging, or release changes justify actual builds
+and artifact checks. Report material gaps, not every irrelevant layer as N/A.
+After relevant checks pass, repeat only after new changes, failures, or unresolved
+risks. Scoped temporary-fixture tests can run and be repaired without repeated
+approval; verify side effects before real-account, installation, or network tests.
 
 1. **Static review**: diff, dependency direction, API use, permissions, data semantics, localization, accessibility, and prohibited paths.
 2. **Focused tests**: pure models, transformations, state machines, migrations, failure behavior, and regressions closest to the change.
@@ -47,9 +54,9 @@ Mocks and diagnostic entry points may be useful during development, but they mus
 - removed from production runtime paths before commit, push, or release;
 - covered by a final repository search whose result is recorded.
 
-Test fixtures may remain when they are passed explicitly by tests and cannot change production defaults. Never use mock data to make missing production data appear valid.
+Test fixtures and permanent isolated development tools may remain when explicitly separated from production defaults. Do not delete them merely because temporary debug injection must be removed. Never use mock data to make missing production data appear valid.
 
-Also scan for secrets, real account payloads, credentials, private keys, personal paths, test-only permissions, screenshots, and destructive endpoints.
+Before sharing or publishing, inspect affected files for secrets, real account payloads, credentials, private keys, private paths, and unintended permissions or endpoints. Screenshots require appropriate data handling when they are part of the authorized deliverable.
 
 ## Release candidate identity
 
@@ -80,7 +87,7 @@ Adapt the commands to the platform. Require evidence for:
 11. post-publication download or installation of the distributed artifact;
 12. byte/hash, signature, launch, and smoke verification of what users actually receive.
 
-Publishing requires user authorization when it changes external state. Preparation and read-only verification do not imply permission to publish.
+Publishing requires scoped user authorization. Preparation and read-only verification do not imply it. Once the exact release operations are authorized, continue through their validation and record updates without requesting the same permission at each step; stop only for a new boundary or actual blocker.
 
 ## Release facts and withdrawal
 

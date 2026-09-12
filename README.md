@@ -30,6 +30,17 @@
 
 It treats documentation as a control system for decisions and evidence, not as paperwork. The workflow scales up for substantial application work and stays out of the way for isolated questions or trivial edits.
 
+## Task-sized context and completion
+
+Use the request to choose the context and completion target. Routine fixes go
+directly to the owning code or spec; document cleanup reads the document-system
+reference; release work reads release gates. These are conditional routes, not a
+mandatory lifecycle. Already-authorized implementation continues through relevant
+verification without a second approval just because a specification was written.
+The public stable artifact and the latest development workspace remain separate.
+Checks scale with the change; human acceptance and external publication retain
+their actual ownership and authorization boundaries.
+
 ## Why this skill
 
 | | |

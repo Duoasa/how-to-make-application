@@ -1,4 +1,4 @@
 interface:
   display_name: "How to Make Application"
   short_description: "Spec-driven workflow for solo app development"
-  default_prompt: "Use $how-to-make-application to take my app from idea to a verified, releasable product."
+  default_prompt: "Use $how-to-make-application to complete this app change with a focused specification and proportional verification."
